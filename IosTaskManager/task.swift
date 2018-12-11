@@ -9,14 +9,14 @@
 import Foundation
 class Task {
     // set the task and duedate
-    let taskTitle: String
+    let taskLabel: String
     
     var dueDate: Date
-    
+    let availabilityView : Bool
     var completed: Bool = false
-    init(taskTitle: String, dueDate: Date) {
-        self.taskTitle = taskTitle
+    init(taskLabel: String, dueDate: Date,availabilityView: Bool) {
+        self.taskLabel = taskLabel
         self.dueDate = dueDate
-        
+        self.availabilityView = availabilityView
     }
 }

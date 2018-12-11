@@ -8,10 +8,14 @@
 
 import UIKit
 
-class addTask: UIViewController {
+class addTaskViewController: UIViewController {
+    
+    let library = Library.sharedInstance
     
     @IBOutlet weak var taskTextField: UITextField!
-        
+    
+
+    
     @IBOutlet weak var datePicker: UIDatePicker!
     
     
@@ -19,20 +23,25 @@ class addTask: UIViewController {
     func saveTasks() {
         guard let title = taskTextField.text else { return }
         let dueDate = datePicker.date
-        let task = Task(taskTitle: title, dueDate: dueDate)
-        Library.sharedInstance.task.append(task)
+        let task = Task(taskLabel: title, dueDate: dueDate, availabilityView: false)
+        print(task.taskLabel)
+        library.task.append(task)
+        //Library.sharedInstance.task.append(task)
+        //self.navigationController?.popViewController(animated: true)
         
+    }
+    
+    
+            
+    
+    @IBAction func saveTask(_ sender: Any) {
+    saveTasks()
+    performSegue(withIdentifier: "getit", sender: Any?.self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
     }
     
-    
-    
-    
-    
-    @IBAction func savePressed(_ sender: Any) {
-        performSegue(withIdentifier: "getit", sender: Any?.self)
-        saveTasks()
-        
-    }
     
 }

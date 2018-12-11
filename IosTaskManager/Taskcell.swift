@@ -1,4 +1,4 @@
-//
+
 //  Taskcell.swift
 //  IosTaskManager
 //
@@ -18,29 +18,34 @@ class Taskcell: UITableViewCell {
         
         @IBOutlet weak var availabilityView: UIView!
         
-        func setup(task: Task) {
-            taskLabel.text = task.taskTitle
-            // if the task is completed the availbility is completed it show green
-            switch task.completed {
-            case true:
-                // hide due date
-                dueDateLabel.isHidden = true
-                // set view to green
-                availabilityView.backgroundColor = .green
-                
-                // the availibility will show red if the task is not completed
-            case false:
-                // show due date
-                dueDateLabel.isHidden = false
-                // set view to red
-                availabilityView.backgroundColor = .red
-                // set dueDate to formatted date
-                
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MM/dd/yyyy"
-                dueDateLabel.text = dateFormatter.string(from: task.dueDate)
-            }
+    func setup(task: Task) {
+        
+        
+        let formatter = DateFormatter()
+        
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        let myString = formatter.string(from: Date())
+        
+        let yourDate = formatter.date(from: myString)
+        
+        
+        
+        let dueDate = formatter.string(from:task.dueDate)
+        
+        print(dueDate)
+        let date = formatter.date(from: dueDate)
+       
+        taskLabel.text = task.taskLabel
+        dueDateLabel.text = formatter.string(from:date!)
+        if task.completed == true {
+            availabilityView.backgroundColor = .green
+            
+        } else {
+            availabilityView.backgroundColor = .red
         }
+        
+    }
         
 }
 

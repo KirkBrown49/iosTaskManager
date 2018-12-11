@@ -10,7 +10,7 @@
 
 import UIKit
 
-class viewController: UIViewController {
+class TaskviewController: UIViewController {
     
     let library = Library.sharedInstance
     
@@ -28,8 +28,13 @@ class viewController: UIViewController {
         self.tableView.backgroundColor = UIColor.white
         tableView.reloadData()
         // Do any additional setup after loading the view, typically from a nib.
+        print(library.task)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    @IBAction func unwindToVC1(segue:UIStoryboardSegue) { }
     
     
 }
@@ -38,18 +43,18 @@ class viewController: UIViewController {
 
 
 // sets the amount of rows in the table view by the number of items
-extension viewController: UITableViewDataSource, UITableViewDelegate {
+extension TaskviewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return library.task.count
     }
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80}
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! Taskcell
         
         let task = library.task[indexPath.row]
-        print(library.task[indexPath.row].taskTitle)
         cell.setup(task: task)
         
         return cell
@@ -60,15 +65,15 @@ extension viewController: UITableViewDataSource, UITableViewDelegate {
         let calendar = Calendar(identifier: .gregorian)
         let dueDate = calendar.date(byAdding: .day, value: 7, to: Date())!
         
-        task.completed = false
+        task.completed = true
         (tableView.cellForRow(at: indexPath) as! Taskcell).setup(task: task)
     }
     
     func unCompleteATask(at indexPath: IndexPath) {
         let task = self.library.task[indexPath.row]
-        task.completed = true
+        task.completed = false
         (tableView.cellForRow(at: indexPath) as! Taskcell).setup(task: task)
-        
+       
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
@@ -105,6 +110,10 @@ extension viewController: UITableViewDataSource, UITableViewDelegate {
     }
     
 }
+
+
+
+
 
 
 
